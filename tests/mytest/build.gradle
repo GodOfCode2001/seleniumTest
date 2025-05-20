@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.seleniumhq.selenium:selenium-java:4.11.0'
+    testImplementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.11.0'
+    testImplementation 'org.seleniumhq.selenium:selenium-firefox-driver:4.11.0'
+    
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.4.1'
+    
+    testImplementation('junit:junit:4.13.2'){
+        exclude group: 'org.hamcrest'
+    }
+    testImplementation 'org.hamcrest:hamcrest-library:2.2'
+    testImplementation 'org.slf4j:slf4j-api:2.0.7'
+    testImplementation 'org.slf4j:slf4j-simple:2.0.7'
+}
+
+test {
+    testLogging.showStandardStreams = true
+    systemProperty "file.encoding", "UTF-8"
+}
+
+compileJava {
+    options.encoding = "UTF-8"
+}
+
+compileTestJava {
+    options.encoding = "UTF-8"
+}
