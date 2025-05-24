@@ -8,6 +8,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.*;
 import org.openqa.selenium.firefox.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
  
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -572,7 +573,41 @@ public class Guru99Tests {
             fail("Textarea test failed: " + e.getMessage());
         }
     }
- 
+
+    @Test
+    public void testN_DropdownMenu() {
+        System.out.println("Test N: Starting dropdown menu test");
+        
+        try {
+            FormPage formPage = new FormPage(driver);
+            formPage.openPage();
+            
+            // wait for page to load
+            Thread.sleep(2000);
+            
+            // click Selenium dropdown menu
+            formPage.clickDropdown("Selenium");
+            Thread.sleep(1000); // wait for animation to complete
+            
+            // verify dropdown menu is expanded
+            assertTrue("Dropdown menu should be expanded", formPage.isDropdownExpanded("Selenium"));
+            
+            // select Radio & Checkbox Demo option
+            formPage.selectDropdownOption("Radio & Checkbox Demo");
+            
+            // verify page title
+            String expectedTitle = "Radio Button & Check Box Demo";
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.titleIs(expectedTitle));
+            assertEquals("Page title should match", expectedTitle, formPage.getPageTitle());
+            
+            System.out.println("Test N Completed: Dropdown menu test successful");
+        } catch (Exception e) {
+            System.err.println("Test N Failed: " + e.getMessage());
+            fail("Dropdown menu test failed: " + e.getMessage());
+        }
+    }
+
     @After
     public void tearDown() {
         if (driver != null) {
